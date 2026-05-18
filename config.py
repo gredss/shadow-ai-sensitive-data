@@ -19,24 +19,47 @@ from typing import Optional, Dict, List
 
 def get_hf_token() -> Optional[str]:
     """
-    Load HuggingFace API token from environment variable.
+    Load HuggingFace API token from environment variable or Google Colab userdata.
+    
+    Supports multiple token sources:
+    1. Environment variable HF_TOKEN (local/server deployment)
+    2. Google Colab userdata (for Colab notebooks)
+    3. Manual token passing (fallback)
     
     Returns:
-        Optional[str]: HuggingFace token if set, None otherwise
+        Optional[str]: HuggingFace token if available, None otherwise
         
     Raises:
-        ValueError: If HF_TOKEN is not set in environment
+        ValueError: If HF_TOKEN is not available from any source
+        
+    Example (Google Colab):
+        from google.colab import userdata
+        hf_token = userdata.get('HF_TOKEN')
+        from huggingface_hub import login
+        login(token=hf_token)
     """
+    # Try environment variable first
     token = os.getenv("HF_TOKEN")
+    
+    # Try Google Colab userdata if in Colab environment
+    if token is None:
+        try:
+            from google.colab import userdata
+            token = userdata.get('HF_TOKEN')
+        except (ImportError, Exception):
+            pass
+    
     if token is None:
         raise ValueError(
-            "HF_TOKEN environment variable not set. "
-            "Please set it with: export HF_TOKEN='your_token_here' "
-            "or create a .env file with HF_TOKEN=your_token_here"
+            "HF_TOKEN not found. Please set it using one of these methods:\n"
+            "1. Environment variable: export HF_TOKEN='your_token_here'\n"
+            "2. Google Colab: Store HF_TOKEN in Colab secrets\n"
+            "3. Manual: Pass token directly to model loading functions"
         )
     return token
 
-# Load HuggingFace token from environment (required for model downloads)
+# Load HuggingFace token (required for model downloads)
+# Will work in both local environments and Google Colab
 HF_TOKEN: Optional[str] = get_hf_token()
 
 
