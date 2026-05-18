@@ -1,0 +1,105 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Model files and checkpoints
+bert_pii_model/
+*.bin
+*.pt
+*.pth
+*.ckpt
+checkpoint-*/
+
+# Data files
+*.csv
+*.json
+*.txt
+!requirements.txt
+!LICENSE
+
+# Logs
+*.log
+logs/
+training.log
+
+# Output files
+results_*.csv
+benchmark_report.csv
+significance_report.csv
+robustness_report.csv
+latency_report.csv
+ground_truth.csv
+prompt_dataset.csv
+eval_sample.csv
+
+# Cache
+.cache/
+*.cache
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation
+docs/_build/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# HuggingFace cache
+.huggingface/
+transformers_cache/
+
+# Reference files (not to be pushed)
+BERT_TRAINING_README.md
+dlp_benchmark_initial.py
+
+# Made with Bob
