@@ -107,7 +107,7 @@ def train_bert_model(prompt_dataset_path: str = "prompt_dataset.csv"):
         return False
 
 
-def main(run_bert: bool = True, run_llm: bool = True, save_outputs: bool = True, auto_train_bert: bool = True):
+def main(run_bert: bool = True, run_llm: bool = True, save_outputs: bool = True, auto_train_bert: bool = True, force_retrain: bool = False):
     """
     Main benchmarking pipeline with automatic BERT training.
     
@@ -116,6 +116,7 @@ def main(run_bert: bool = True, run_llm: bool = True, save_outputs: bool = True,
         run_llm: Whether to run LLM evaluation
         save_outputs: Whether to save output CSV files
         auto_train_bert: Whether to automatically train BERT if model doesn't exist
+        force_retrain: Whether to force BERT retraining even if model exists
     """
     start = time.time()
     print_banner("EVALUATION OF DLP PARADIGMS — Indonesian Shadow AI Traffic")
@@ -125,8 +126,19 @@ def main(run_bert: bool = True, run_llm: bool = True, save_outputs: bool = True,
     print(f"  Bootstrap : 1,000 resamples | Permutation: 10,000 shuffles")
 
     # Check and train BERT model if needed
-    if run_bert and auto_train_bert:
-        if not check_bert_model_exists():
+    if run_bert and (auto_train_bert or force_retrain):
+        model_exists = check_bert_model_exists()
+        
+        if force_retrain:
+            logger.warning(f"🔄 Force retrain enabled. Retraining BERT model...")
+            if model_exists:
+                logger.info(f"Existing model at {INDOBERT_NER_MODEL} will be overwritten")
+            
+            success = train_bert_model()
+            if not success:
+                logger.error("BERT training failed. Skipping BERT evaluation.")
+                run_bert = False
+        elif not model_exists:
             logger.warning(f"Fine-tuned BERT model not found at: {INDOBERT_NER_MODEL}")
             logger.info("Automatic training enabled. Starting BERT fine-tuning...")
             
@@ -226,6 +238,7 @@ if __name__ == "__main__":
     parser.add_argument("--no-save", action="store_true", help="Don't save output files")
     parser.add_argument("--no-auto-train", action="store_true", help="Don't automatically train BERT if model missing")
     parser.add_argument("--train-bert-only", action="store_true", help="Only train BERT model and exit")
+    parser.add_argument("--force-retrain", action="store_true", help="Force BERT retraining even if model exists (use after fixing training data)")
     args = parser.parse_args()
     
     # If only training BERT
@@ -239,7 +252,6 @@ if __name__ == "__main__":
         run_bert=not args.skip_bert,
         run_llm=not args.skip_llm,
         save_outputs=not args.no_save,
-        auto_train_bert=not args.no_auto_train
+        auto_train_bert=not args.no_auto_train,
+        force_retrain=args.force_retrain
     )
-
-# Made with Bob

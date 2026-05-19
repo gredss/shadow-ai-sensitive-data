@@ -127,31 +127,31 @@ CC_PREFIXES: List[str] = ["4", "51", "52", "53", "54", "55", "6011"]
 """Credit card number prefixes (Visa, Mastercard, Discover)."""
 
 FORMAL_TEMPLATES: List[str] = [
-    "Mohon bantuannya untuk memproses data nasabah berikut ini. Nama: {name}, NIK: {nik}, Nomor Telepon: {phone}, Nomor Rekening: {bank_account}. Harap segera ditindaklanjuti.",
-    "Dengan hormat, kami mengajukan permohonan verifikasi identitas atas nama {name} dengan NIK {nik}. Kartu kredit yang terdaftar: {credit_card}. Nomor HP: {phone}.",
-    "Kepada Tim Data Center, mohon lakukan pembaruan data pelanggan. Detail: {name}, NIK {nik}, rekening {bank_account}, email {email}.",
-    "Bapak/Ibu Tim Compliance, terlampir data untuk proses KYC: NIK {nik} atas nama {name}, kontak {phone}, dan nomor CC {credit_card}.",
-    "Sesuai SOP perusahaan, kami menyampaikan data berikut untuk keperluan audit: Nama {name}, NIK: {nik}, No. Rek: {bank_account}.",
+    "Mohon bantuannya untuk memproses data nasabah berikut ini. Nama: {name}, NIK: {nik}, Nomor Telepon: {phone}, Nomor Rekening: {bank_account}, Kartu Kredit: {credit_card}, Email: {email}. Harap segera ditindaklanjuti.",
+    "Dengan hormat, kami mengajukan permohonan verifikasi identitas atas nama {name} dengan NIK {nik}. Kartu kredit yang terdaftar: {credit_card}. Nomor HP: {phone}. Rekening bank: {bank_account}. Email: {email}.",
+    "Kepada Tim Data Center, mohon lakukan pembaruan data pelanggan. Detail: {name}, NIK {nik}, telepon {phone}, rekening {bank_account}, kartu kredit {credit_card}, email {email}.",
+    "Bapak/Ibu Tim Compliance, terlampir data untuk proses KYC: NIK {nik} atas nama {name}, kontak {phone}, nomor CC {credit_card}, rekening {bank_account}, dan email {email}.",
+    "Sesuai SOP perusahaan, kami menyampaikan data berikut untuk keperluan audit: Nama {name}, NIK: {nik}, No. HP: {phone}, No. Rek: {bank_account}, CC: {credit_card}, Email: {email}.",
 ]
 
 """Formal Indonesian prompt templates for professional contexts."""
 
 CODE_MIXED_TEMPLATES: List[str] = [
-    "Guys, please help me check this user info ASAP ya! NIKnya: {nik}, dia punya HP {phone}. Nama lengkapnya {name}. Thanks banget yaa!",
-    "Halo team, tolong dong update database buat user ini. CC number: {credit_card}, NIK {nik}. Urgent nih karena deadlinenya today!",
-    "FYI everyone, ada data mismatch di system. User {name} dengan NIK {nik} nomernya {phone}, tolong didouble check ya rekening {bank_account}.",
-    "Hey, bisa tolong recheck gak? Katanya NIK {nik} sama CC {credit_card} invalid tapi menurut gw udah bener. Contact {name} di {phone}.",
-    "Tolong bantu verify data nih ASAP. {name} | NIK: {nik} | Phone: {phone} | Rek: {bank_account} | Email: {email}. Waiting for your response!",
+    "Guys, please help me check this user info ASAP ya! NIKnya: {nik}, dia punya HP {phone}, CC {credit_card}, rekening {bank_account}, email {email}. Nama lengkapnya {name}. Thanks banget yaa!",
+    "Halo team, tolong dong update database buat user ini. CC number: {credit_card}, NIK {nik}, phone {phone}, rekening {bank_account}, email {email}. Urgent nih karena deadlinenya today!",
+    "FYI everyone, ada data mismatch di system. User {name} dengan NIK {nik} nomernya {phone}, CC {credit_card}, tolong didouble check ya rekening {bank_account} sama email {email}.",
+    "Hey, bisa tolong recheck gak? Katanya NIK {nik} sama CC {credit_card} invalid tapi menurut gw udah bener. Contact {name} di {phone}, rekening {bank_account}, email {email}.",
+    "Tolong bantu verify data nih ASAP. {name} | NIK: {nik} | Phone: {phone} | CC: {credit_card} | Rek: {bank_account} | Email: {email}. Waiting for your response!",
 ]
 
 """Code-mixed Indonesian-English prompt templates for casual workplace communication."""
 
 SLANG_TEMPLATES: List[str] = [
-    "Weh gengs tlg bgt rapiin data KTP ni {nik} dr si {name} biar gampang diinput, nopeny {phone} klo mau follow up abis maksi yaw.",
-    "Bre tolongin dong wkwkww cek NIK {nik} valid g siehh? Punya {name}, nomernya {phone}, reknya {bank_account}. Tenks yh,, biar gx kna audit.",
-    "Ges, ada prob nih sm data user: NIKnya.. either {nik} ato {decoy_id}, CC {credit_card}, no hp {phone}. Tolng gaskeun asap yaah sblm si b0s marah eawwokwoekwk.",
-    "Hlooo.. ni hrsny udh aman sijhh, tlg proses data inieh dungs: nik {nik} nm {name} hp {phone} rek {bank_account} email {email}, gece yee. Tq.",
-    "Mksh sblmx mas mba, minta tolong verif NIK {nik} smaa CC {credit_card} dong, urgent bgtt sumpaa, kontakx {phone}. Plus jan ktuker ama resi {decoy_id}, maaciw.",
+    "Weh gengs tlg bgt rapiin data KTP ni {nik} dr si {name} biar gampang diinput, nopeny {phone}, CC {credit_card}, reknya {bank_account}, emailny {email} klo mau follow up abis maksi yaw.",
+    "Bre tolongin dong wkwkww cek NIK {nik} valid g siehh? Punya {name}, nomernya {phone}, CC {credit_card}, reknya {bank_account}, email {email}. Tenks yh,, biar gx kna audit.",
+    "Ges, ada prob nih sm data user: NIKnya.. either {nik} ato {decoy_id}, CC {credit_card}, no hp {phone}, rek {bank_account}, email {email}. Tolng gaskeun asap yaah sblm si b0s marah eawwokwoekwk.",
+    "Hlooo.. ni hrsny udh aman sijhh, tlg proses data inieh dungs: nik {nik} nm {name} hp {phone} CC {credit_card} rek {bank_account} email {email}, gece yee. Tq.",
+    "Mksh sblmx mas mba, minta tolong verif NIK {nik} smaa CC {credit_card} dong, urgent bgtt sumpaa, kontakx {phone}, reknya {bank_account}, emailny {email}. Plus jan ktuker ama resi {decoy_id}, maaciw.",
 ]
 
 """Slang Indonesian prompt templates with typos and informal language."""
