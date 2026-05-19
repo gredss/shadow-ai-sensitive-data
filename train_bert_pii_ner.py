@@ -90,6 +90,7 @@ ID2LABEL = {idx: label for label, idx in LABEL2ID.items()}
 
 # Model configuration
 DEFAULT_MODEL = "cahya/bert-base-indonesian-NER"  # Pre-trained Indonesian NER model (will discard classifier, keep BERT encoder)
+MAX_LENGTH = 256
 BATCH_SIZE = 16
 LEARNING_RATE = 5e-5
 NUM_EPOCHS = 10
