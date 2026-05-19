@@ -89,8 +89,7 @@ LABEL2ID = {label: idx for idx, label in enumerate(ENTITY_TYPES)}
 ID2LABEL = {idx: label for label, idx in LABEL2ID.items()}
 
 # Model configuration
-DEFAULT_MODEL = "indobenchmark/indobert-base-p1"  # or "indolem/indobert-base-uncased"
-MAX_LENGTH = 256
+DEFAULT_MODEL = "cahya/bert-base-indonesian-NER"  # Pre-trained Indonesian NER model (will discard classifier, keep BERT encoder)
 BATCH_SIZE = 16
 LEARNING_RATE = 5e-5
 NUM_EPOCHS = 10
@@ -98,9 +97,6 @@ WARMUP_RATIO = 0.1
 WEIGHT_DECAY = 0.01
 GRADIENT_ACCUMULATION_STEPS = 2
 
-# ══════════════════════════════════════════════════════════════════════════════
-# DATA PREPROCESSING
-# ══════════════════════════════════════════════════════════════════════════════
 
 def extract_entities_from_prompt(prompt: str, ground_truth: Dict) -> List[Tuple[str, int, int, str]]:
     """
@@ -232,10 +228,6 @@ def load_and_preprocess_data(data_path: str, tokenizer) -> pd.DataFrame:
     return pd.DataFrame(training_examples)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# DATASET CLASS
-# ══════════════════════════════════════════════════════════════════════════════
-
 class PII_NER_Dataset(Dataset):
     """PyTorch Dataset for PII NER task."""
     
@@ -281,10 +273,6 @@ class PII_NER_Dataset(Dataset):
             "labels": torch.tensor(label_ids, dtype=torch.long),
         }
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# TRAINING UTILITIES
-# ══════════════════════════════════════════════════════════════════════════════
 
 def compute_metrics(pred):
     """Compute seqeval metrics for NER evaluation."""
@@ -344,10 +332,6 @@ def create_weighted_loss(label_counts: Dict[str, int], num_labels: int) -> torch
     
     return weights
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# MAIN TRAINING FUNCTION
-# ══════════════════════════════════════════════════════════════════════════════
 
 def main(args):
     """Main training pipeline."""
@@ -409,7 +393,11 @@ def main(args):
     model = AutoModelForTokenClassification.from_pretrained(
         args.model_name,
         config=config,
+        ignore_mismatched_sizes=True,  # Allow loading with different number of labels
     )
+    
+    logger.info(f"Model loaded with {len(ENTITY_TYPES)} labels for PII detection")
+    logger.info(f"Note: Pre-trained classifier discarded, training new classifier from scratch")
     
     model.to(device)
     
@@ -536,11 +524,6 @@ def main(args):
     logger.info(f"Test Precision: {test_metrics['eval_precision']:.4f}")
     logger.info(f"Test Recall: {test_metrics['eval_recall']:.4f}")
     logger.info("="*80)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# CLI
-# ══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tune BERT for Indonesian PII NER")
