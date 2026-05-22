@@ -24,7 +24,7 @@ This benchmark evaluates three DLP approaches:
 ## Project Structure
 
 ```
-dlp-1/
+shadow-ai-sensitive-data/
 ├── main.py                      # Main orchestration script
 ├── config.py                    # Configuration constants
 ├── utils.py                     # Common utilities
