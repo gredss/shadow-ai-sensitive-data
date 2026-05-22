@@ -320,6 +320,6 @@ For questions or issues, please open a GitHub issue or contact the maintainers.
 
 ## Acknowledgments
 
-- IndoBERT model by IndoNLP
-- Llama-3 by Meta AI
-- Transformers library by Hugging Face
+- Artificial Intelligence R&D Center – BINUS UNIVERSITY
+- Bioinformatics & Data Science Research Center (BDSRC) – BINUS UNIVERSITY
+- School of Computer Science – BINUS UNIVERSITY
